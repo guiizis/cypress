@@ -11,4 +11,8 @@ describe('template spec', () => {
     cy.get('[data-cy="main-header-logo"]').should('be.visible');
   });
 
-})
+  it('should display the page title', () => {
+    cy.get('.main-header h1').should('contain.text', 'React Tasks');
+    cy.contains('React Tasks'); //check all the page
+  });
+});
