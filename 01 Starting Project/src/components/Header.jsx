@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 function Header() {
   return (
     <header className="main-header">
-      <img src={logo} alt="A list" />
+      <img data-cy="main-header-logo" src={logo} alt="A list" />
       <h1>React Tasks</h1>
     </header>
   );
