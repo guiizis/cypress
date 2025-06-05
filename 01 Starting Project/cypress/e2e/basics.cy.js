@@ -14,5 +14,6 @@ describe('template spec', () => {
   it('should display the page title', () => {
     cy.get('.main-header h1').should('contain.text', 'React Tasks');
     cy.contains('React Tasks'); //check all the page
+    cy.get('h1').should('have.length', 1); //check only one h1
   });
 });
