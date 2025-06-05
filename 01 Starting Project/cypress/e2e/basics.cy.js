@@ -7,6 +7,7 @@ describe('template spec', () => {
   });
 
   it('should render the main page', () => {
+    cy.get('.main-header img').should('be.visible');
     cy.get('[data-cy="main-header-logo"]').should('be.visible');
   });
 
