@@ -8,8 +8,10 @@ describe('navigation test', () => {
   it('should navigate into the rotes', () => {
     cy.get('[data-cy="header-about-link"]').click();
     cy.get('h1').should('contain', 'About Us');
+    cy.location('pathname').should('include', '/about');
 
-    cy.get('[data-cy="header-home-link"]').click();
+    cy.go('back');
     cy.get('h1').should('contain', 'Home Page');
+    cy.location('pathname').should('include', '/');
   });
 });
