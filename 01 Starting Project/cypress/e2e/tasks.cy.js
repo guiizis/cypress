@@ -41,4 +41,10 @@ describe('tasks management', () => {
         expect(li).to.have.descendants('p').to.contain(newTask.summary);
       });
   });
+
+  it('should show an alert message when try to post a new task without valid content', () => {
+    cy.get('[data-cy="start-add-task-button"]').click();
+    cy.get('[type="submit"]').click();
+    cy.get('.error-message').should('have.text', 'Please provide values for task title, summary and category!');
+  });
 });
