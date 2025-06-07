@@ -7,13 +7,26 @@ describe('contact form', () => {
   });
 
   it('should submit the form', () => {
-      cy.get('[data-cy="contact-btn-submit"]').as('btnSubmit');
-      
-      cy.get('#message').type('This is a test message');
-      cy.get('#name').type('John Doe');
-      cy.get('#email').type('test@email.com');
+    cy.get('[data-cy="contact-btn-submit"]').as('btnSubmit');
 
-      cy.get('@btnSubmit')
+    cy.get('#message').type('This is a test message');
+    cy.get('#name').type('John Doe');
+    cy.get('#email').type('test@email.com');
+
+    cy.get('@btnSubmit').then(($btn) => {
+      expect($btn)
+        .to
+        .have
+        .text('Send Message');
+
+      expect($btn)
+        .to
+        .be
+        .not
+        .disabled;
+    });
+
+    cy.get('@btnSubmit')
       .click()
       .should('contain', 'Sending...')
       .and('be.disabled');
