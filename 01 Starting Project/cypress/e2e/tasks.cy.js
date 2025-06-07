@@ -47,4 +47,36 @@ describe('tasks management', () => {
     cy.get('[type="submit"]').click();
     cy.get('.error-message').should('have.text', 'Please provide values for task title, summary and category!');
   });
+
+  it('should filter tasks by category', () => {
+    const categories = ['urgent', 'important', 'moderate', 'low'];
+    const tasks = categories.map((category) => ({
+      title: `Task in ${category} category`,
+      summary: `Summary for task in ${category} category`,
+      category: category
+    }));
+
+    tasks.forEach((task) => {
+      cy.get('[data-cy="start-add-task-button"]').click();
+      cy.get('#title').type(task.title);
+      cy.get('#summary').type(task.summary);
+      cy.get('#category').select(task.category);
+      cy.get('[type="submit"]').click();
+    });
+
+    cy.get('#filter').select('all');
+    cy.get('.task').should('have.length', tasks.length);
+
+    cy.get('#filter').select('urgent');
+    cy.get('.task').should('have.length', 1);
+
+    cy.get('#filter').select('important');
+    cy.get('.task').should('have.length', 1);
+
+    cy.get('#filter').select('moderate');
+    cy.get('.task').should('have.length', 1);
+
+    cy.get('#filter').select('low');
+    cy.get('.task').should('have.length', 1);
+  });
 });
