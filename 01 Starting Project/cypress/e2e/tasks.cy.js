@@ -72,4 +72,27 @@ describe('tasks management', () => {
       cy.get('.task').should('have.length', 1);
     });
   });
+
+  it('should add tasks in the correct order', () => {
+    const tasks = [
+      { title: 'Task 1', summary: 'Summary for task 1', category: 'urgent' },
+      { title: 'Task 2', summary: 'Summary for task 2', category: 'important' },
+      { title: 'Task 3', summary: 'Summary for task 3', category: 'moderate' }
+    ];
+
+    tasks.forEach((task) => {
+      cy.get('[data-cy="start-add-task-button"]').click();
+      cy.get('#title').type(task.title);
+      cy.get('#summary').type(task.summary);
+      cy.get('#category').select(task.category);
+      cy.get('[type="submit"]').click();
+    });
+
+    cy.get('.task')
+      .should('have.length', tasks.length)
+      .each((li, index) => {
+        expect(li).to.have.descendants('h2').to.contain(tasks[index].title);
+        expect(li).to.have.descendants('p').to.contain(tasks[index].summary);
+      }); 
+  });
 });
