@@ -1,6 +1,6 @@
-============= SEGUROS PJ =============
+============= STYLE GUIDE SCSS =============
 
-#### Analise do repositorio: Seguro Empresarial
+#### Analise do repositorio: **Empresarial**
 #### Sugestões de melhorias e cuidados em relação ao uso de estilos
 
 #### Aqui estão práticas comuns que funcionam “na marra”, mas que viram um monstro difícil de manter com o tempo:
