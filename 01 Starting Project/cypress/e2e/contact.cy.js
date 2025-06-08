@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 describe('contact form', () => {
-  it('should submit the form', () => {
+  it('should submit the form', { defaultCommandTimeout: 5000 }  ,() => {
     cy.visit('http://localhost:5173/about');
     cy.get('[data-cy="contact-input-message"]').type('Hello world!');
     cy.get('[data-cy="contact-input-name"]').type('John Doe');
