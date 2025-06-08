@@ -1,6 +1,6 @@
 ============= STYLE GUIDE SCSS =============
 
-#### Analise do repositorio: **Empresarial**
+#### Análise do repositório: **Empresarial**
 #### Sugestões de melhorias e cuidados em relação ao uso de estilos
 
 #### Aqui estão práticas comuns que funcionam “na marra”, mas que viram um monstro difícil de manter com o tempo:
@@ -18,9 +18,7 @@
 Por que é ruim:
 
 - Não escala em responsivo (valor fixo)
-
 - Desconsidera acessibilidade (usuário que aumenta fontes no sistema se complica)
-
 - Dificulta manter espaçamentos coesos
 
 ✅ Melhor abordagem:
@@ -45,15 +43,12 @@ $title-size: 1.5rem;
 Por que é ruim:
 
 - Quebra a cascata natural do CSS (deve ser usado em casos muito **Específicos**)
-
 - Vira guerra de !important sobre !important
-
 - Torna manutenção imprevisível
 
 ✅ Melhor abordagem:
 
 - Melhore a especificidade com BEM
-
 - **Se necessário:** aumente a especificidade com escopo do component (:host, :host-context)
 
 ```html
@@ -94,11 +89,8 @@ O exemplo acima está em ```scss```, que já disponibiliza algumas maneiras de f
 Por que é ruim:
 
 - ::ng-deep pode ser tão nocivo que está deprecated
-
 - Não respeita nenhuma limitação (em alguns casos consegue atravessar o shadowDom)
-
 - Ignora o encapsulamento do Angular
-
 - Consegue alterar estilos de outros componentes já que mexe na "raiz" da camada de estilo
 
 ✅ Melhor abordagem:
@@ -107,87 +99,28 @@ Por que é ruim:
 - Veja se **:host-context** não resolve o seu problema
 - Estilos globais via styles.scss
 
-4. div fantasma com style inline
+#### 4. div fantasma com style inline
 ❌ O que fazem:
 
-html
-Copiar
-Editar
+```scss
 <div style="margin-top: 24px;"></div>
-😬 Por que é ruim:
+```
+Por que é ruim:
 
-Semântica zero
-
-Estilo colado no HTML
-
-Inutilizável em design system
-
-✅ Melhor abordagem:
-
-Use gap no flex/grid
-
-Use padding/margin direto no bloco sem criar elementos vazios
-
-5. Nomes de classe genéricos e sem padrão
-❌ O que fazem:
-
-html
-Copiar
-Editar
-<div class="content">
-  <div class="footer">...</div>
-</div>
-😬 Por que é ruim:
-
-Colisão com outros componentes
-
-Código ilegível fora do contexto
-
-✅ Melhor abordagem:
-Use BEM:
-
-html
-Copiar
-Editar
-<div class="payment">
-  <div class="payment__content"></div>
-  <div class="payment__footer"></div>
-</div>
-6. HTML não semântico
-❌ O que fazem:
-
-html
-Copiar
-Editar
-<div class="box">
-  <div class="text">Bem-vindo</div>
-</div>
-😬 Por que é ruim:
-
-Prejudica SEO
-
-Acessibilidade baixa
-
-Dificulta leitura de código
+- Semântica zero
+- Estilo inline colado no HTML (impossível de reaproveitar, sobrescrever ou manter sem mexer diretamente na marcação)
+- HTML poluído
+- Dificulta acessibilidade
+- Divs vazias usadas apenas para espaçamento não têm valor semântico e atrapalham a leitura estrutural da página por mecanismos de busca.
 
 ✅ Melhor abordagem:
 
-html
-Copiar
-Editar
-<section class="welcome">
-  <h2 class="welcome__title">Bem-vindo</h2>
-</section>
+- Use gap no flex/grid
+- Use padding/margin direto no bloco sem criar elementos vazios
 
 Quer saber mais sobre o assunto?
 - [Angular Styling Easy](https://medium.com/@thomas.laforge/angular-styling-made-easy-leveraging-the-power-of-css-variables-cb33feeca6d1)
 - [Deprecation of ::ng-deep](https://medium.com/@simon.sharp_25406/angular-alternatives-after-the-deprecation-of-ng-deep-b51591a296e7)
 
-Achou algum erro ou algo que poderia estar sendo explicado de uma maneira mais didatica? sinta-se a vontade e contribua com esse artigo 😁
-
-
-
-
-
-
-
+Achou algum erro ou algo que poderia estar sendo explicado de uma maneira mais didatica? sinta-se a vontade e contribua com esse artigo 😁.  
+Vamos juntos transformar a nossa comunidade em referência 👾.
