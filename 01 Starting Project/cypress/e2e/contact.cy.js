@@ -31,4 +31,10 @@ describe('contact form', () => {
       .should('contain', 'Sending...')
       .and('be.disabled');
   });
+
+  it('should submit the form with enter key', () => {
+    cy.get('#message').type('This is a test message');
+    cy.get('#name').type('John Doe');
+    cy.get('#email').type('test@email.com{enter}');
+  });
 });
