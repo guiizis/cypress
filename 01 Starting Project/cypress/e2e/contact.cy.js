@@ -1,91 +1,57 @@
 /// <reference types="Cypress" />
 
 describe('contact form', () => {
-
-  beforeEach(() => {
-    cy.visit('http://localhost:5173/about');
-  });
-
   it('should submit the form', () => {
-    cy.get('[data-cy="contact-btn-submit"]').as('btnSubmit');
-
-    cy.get('#message').type('This is a test message');
-    cy.get('#name').type('John Doe');
-    cy.get('#email').type('test@email.com');
-
-    cy.get('@btnSubmit').then(($btn) => {
-      expect($btn)
-        .to
-        .have
-        .text('Send Message');
-
-      expect($btn)
-        .to
-        .be
-        .not
-        .disabled;
+    cy.visit('http://localhost:5173/about');
+    cy.get('[data-cy="contact-input-message"]').type('Hello world!');
+    cy.get('[data-cy="contact-input-name"]').type('John Doe');
+    cy.get('[data-cy="contact-btn-submit"]').then((el) => {
+      expect(el.attr('disabled')).to.be.undefined;
+      expect(el.text()).to.eq('Send Message');
     });
-
-    cy.get('@btnSubmit')
-      .click()
-      .should('contain', 'Sending...')
-      .and('be.disabled');
+    cy.screenshot();
+    cy.get('[data-cy="contact-input-email"]').type('test@example.com{enter}');
+    // cy.get('[data-cy="contact-btn-submit"]')
+    //   .contains('Send Message')
+    //   .should('not.have.attr', 'disabled');
+    cy.screenshot();
+    cy.get('[data-cy="contact-btn-submit"]').as('submitBtn');
+    // cy.get('@submitBtn').click();
+    cy.get('@submitBtn').contains('Sending...');
+    cy.get('@submitBtn').should('have.attr', 'disabled');
   });
 
-  it('should submit the form with enter key', () => {
-    cy.get('#message').type('This is a test message');
-    cy.get('#name').type('John Doe');
-    cy.get('#email').type('test@email.com{enter}');
-  });
-
-  it('should validate the form by button', () => {
-    cy.get('[data-cy="contact-btn-submit"]').as('btnSubmit');
-
-    cy.get('@btnSubmit').then(($btn) => {
-      cy.wrap($btn).click();
-
-      expect($btn)
-        .to
-        .be
-        .not
-        .disabled;
-
-      expect($btn)
-        .to
-        .have
-        .text('Send Message');
-    })
-  });
-
-  it('should validate the form by form fields', () => {
-    cy.get('[data-cy="contact-btn-submit"]').as('btnSubmit');
-    const formFields = [
-      {
-        id: 'contact-input-message',
-        validContent: 'This is a test message'
-      },
-      {
-        id: 'contact-input-name',
-        validContent: 'John Doe'
-      },
-      {
-        id: 'contact-input-email',
-        validContent: 'content@email.com'
-      }
-    ];
-
-    formFields.forEach((field) => {
-      cy.get(`[data-cy="${field.id}"]`).click();
+  it('should validate the form input', () => {
+    cy.visit('http://localhost:5173/about');
+    cy.get('[data-cy="contact-btn-submit"]').click();
+    cy.get('[data-cy="contact-btn-submit"]').then((el) => {
+      expect(el).to.not.have.attr('disabled');
+      expect(el.text()).to.not.equal('Sending...');
     });
+    cy.get('[data-cy="contact-btn-submit"]').contains('Send Message');
+    cy.get('[data-cy="contact-input-message"]').as('msgInput');
+    cy.get('@msgInput').focus().blur();
+    cy.get('@msgInput')
+      .parent()
+      .should((el) => {
+        expect(el.attr('class')).not.to.be.undefined;
+        expect(el.attr('class')).contains('invalid');
+      })
 
-    cy.get('@btnSubmit').click();
-    cy.get('form').find('[class*="_invalid_"]').should('have.length', formFields.length);
+    cy.get('[data-cy="contact-input-name"]').focus().blur();
+    cy.get('[data-cy="contact-input-name"]')
+      .parent()
+      .should((el) => {
+        expect(el.attr('class')).not.to.be.undefined;
+        expect(el.attr('class')).contains('invalid');
+      })
 
-
-    formFields.forEach((field, i) => {
-      cy.get(`[data-cy="${field.id}"]`).type(field.validContent);
-      cy.get('@btnSubmit').click();
-      cy.get('form').find('[class*="_invalid_"]').should('have.length', formFields.length - (i + 1));
-    });
+    cy.get('[data-cy="contact-input-email"]').focus().blur();
+    cy.get('[data-cy="contact-input-email"]')
+      .parent()
+      .should((el) => {
+        expect(el.attr('class')).not.to.be.undefined;
+        expect(el.attr('class')).contains('invalid');
+      })
   });
 });

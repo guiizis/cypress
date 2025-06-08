@@ -1,17 +1,14 @@
 /// <reference types="Cypress" />
 
-describe('navigation test', () => {
-  beforeEach(() => {
+describe('page navigation', () => {
+  it('should navigate between pages', () => {
     cy.visit('http://localhost:5173/');
-  });
-
-  it('should navigate into the rotes', () => {
     cy.get('[data-cy="header-about-link"]').click();
-    cy.get('h1').should('contain', 'About Us');
-    cy.location('pathname').should('include', '/about');
-
+    cy.location('pathname').should('eq', '/about'); // /about => About page
     cy.go('back');
-    cy.get('h1').should('contain', 'Home Page');
-    cy.location('pathname').should('include', '/');
+    cy.location('pathname').should('eq', '/'); // / => Home page
+    cy.get('[data-cy="header-about-link"]').click();
+    cy.get('[data-cy="header-home-link"]').click();
+    cy.location('pathname').should('eq', '/'); // / => Home page
   });
 });
