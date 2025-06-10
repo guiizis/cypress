@@ -27,3 +27,11 @@
 Cypress.Commands.add('submitForm', () => {
   cy.get('form button[type="submit"]').click();
 });
+
+Cypress.Commands.addQuery('getByTestId', (testId) => {
+  const getFn = cy.now('get', `[data-cy="${testId}"]`);
+  return () => {
+    const element = getFn();
+    return element;
+  }
+});
