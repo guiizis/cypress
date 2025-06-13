@@ -6,7 +6,7 @@ describe('contact form', () => {
   });
 
   it('should submit the form', { defaultCommandTimeout: 5000 }, () => {
-
+    cy.task('seedDatabase', 'isJustATestFileName');
     cy.getByTestId("contact-input-message").type('Hello world!');
     cy.getByTestId("contact-input-name").type('John Doe');
     cy.getByTestId("contact-btn-submit").then((el) => {

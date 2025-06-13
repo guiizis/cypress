@@ -4,8 +4,14 @@ export default defineConfig({
   video: false,
   e2e: {
     baseUrl: "http://localhost:5173",
-    c(on, config) {
-      // implement node event listeners here
+
+    setupNodeEvents(on, config) {
+      on('task', {
+        seedDatabase(isJustATestFileName) {
+          console.log('Seeding database...' + isJustATestFileName);
+          return null; // Return null or any value you want
+        }
+      });
     },
   },
 });
