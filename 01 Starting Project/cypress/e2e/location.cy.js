@@ -15,6 +15,10 @@ describe('share location', () => {
             });
           }, 1000);
         });
+
+      cy.stub(window.navigator.clipboard, 'writeText')
+        .as('writeText')
+        .resolves();
     });
   });
 
@@ -24,5 +28,12 @@ describe('share location', () => {
 
     cy.get('[data-cy="get-loc-btn"]').should('be.disabled');
     cy.get('[data-cy="actions"]').should('contain', 'Location fetched!');
+  });
+
+  it('should share location', () => {
+    cy.get('[data-cy="name-input"]').type('John Doe');
+    cy.get('[data-cy="get-loc-btn"]').click();
+    cy.get('[data-cy="share-loc-btn"]').click();
+    cy.get('[data-cy="info-message"]').should('be.visible');
   });
 });
