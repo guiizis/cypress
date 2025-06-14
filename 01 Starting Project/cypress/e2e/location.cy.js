@@ -35,6 +35,7 @@ describe('share location', () => {
     cy.get('[data-cy="get-loc-btn"]').click();
     cy.get('[data-cy="share-loc-btn"]').click();
     cy.get('[data-cy="info-message"]').should('be.visible');
+    cy.get('[data-cy="info-message"]').should('be.not.visible');
 
     cy.get('@setLocalStoreItem').should('be.called');
     cy.get('@getLocalStoreItem').should('be.called');
