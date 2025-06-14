@@ -16,6 +16,9 @@ describe('share location', () => {
       cy.stub(window.navigator.clipboard, 'writeText')
         .as('writeText')
         .resolves();
+      
+      cy.spy(window.localStorage, 'setItem').as('setLocalStoreItem')
+      cy.spy(window.localStorage, 'getItem').as('getLocalStoreItem')
     });
   });
 
@@ -32,5 +35,8 @@ describe('share location', () => {
     cy.get('[data-cy="get-loc-btn"]').click();
     cy.get('[data-cy="share-loc-btn"]').click();
     cy.get('[data-cy="info-message"]').should('be.visible');
+
+    cy.get('@setLocalStoreItem').should('be.called');
+    cy.get('@getLocalStoreItem').should('be.called');
   });
 });
