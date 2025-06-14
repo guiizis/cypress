@@ -3,7 +3,18 @@
 describe('share location', () => {
   beforeEach(() => {
     cy.visit('/').then(window => {
-      cy.stub(window.navigator.geolocation, 'getCurrentPosition').as('getCurrentPosition');
+      cy.stub(window.navigator.geolocation, 'getCurrentPosition')
+        .as('getCurrentPosition')
+        .callsFake((cb) => {
+          setTimeout(() => {
+            cb({
+              coords: {
+                latitude: 37.7749,
+                longitude: -122.4194,
+              },
+            });
+          }, 1000);
+        });
     });
   });
 
@@ -12,6 +23,6 @@ describe('share location', () => {
     cy.get('@getCurrentPosition').should('be.called');
 
     cy.get('[data-cy="get-loc-btn"]').should('be.disabled');
-    cy.get('[data-cy="actions"]').should('contain', 'location fetched');
+    cy.get('[data-cy="actions"]').should('contain', 'Location fetched!');
   });
 });
