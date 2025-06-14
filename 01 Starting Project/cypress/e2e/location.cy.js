@@ -2,20 +2,17 @@
 
 describe('share location', () => {
   beforeEach(() => {
+    cy.fixture('user-location.json').as('locationData');
     cy.visit('/').then(window => {
-      cy.stub(window.navigator.geolocation, 'getCurrentPosition')
-        .as('getCurrentPosition')
-        .callsFake((cb) => {
-          setTimeout(() => {
-            cb({
-              coords: {
-                latitude: 37.7749,
-                longitude: -122.4194,
-              },
-            });
-          }, 1000);
-        });
-
+      cy.get('@locationData').then((fakePosition) => {
+        cy.stub(window.navigator.geolocation, 'getCurrentPosition')
+          .as('getCurrentPosition')
+          .callsFake((cb) => {
+            setTimeout(() => {
+              cb(fakePosition);
+            }, 1000);
+          });
+      });
       cy.stub(window.navigator.clipboard, 'writeText')
         .as('writeText')
         .resolves();
