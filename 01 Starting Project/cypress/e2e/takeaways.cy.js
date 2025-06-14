@@ -2,7 +2,8 @@
 
 describe('Takeaways', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('/');
+    cy.task('task'); // Seed the database with initial data
   });
 
   it('should display a list of fetched takeaways', () => {
