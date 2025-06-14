@@ -1,7 +1,10 @@
 /// <reference types="Cypress" />
 
 describe('Takeaways', () => {
-  it('should display a list of fetched takeaways', () => {
+  beforeEach(() => {
     cy.visit('/')
+  });
+
+  it('should display a list of fetched takeaways', () => {
   });
 });
