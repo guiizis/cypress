@@ -1,6 +1,5 @@
 ============= STYLE GUIDE SCSS =============
 
-#### Análise do repositório: **Empresarial**
 #### Sugestões de melhorias e cuidados em relação ao uso de estilos
 
 #### Aqui estão práticas comuns que funcionam “na marra”, mas que viram um monstro difícil de manter com o tempo:
